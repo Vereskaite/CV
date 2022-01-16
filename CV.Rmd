@@ -4,17 +4,73 @@ author: Diana Vereškaitė
 date: "`r Sys.Date()`"
 output:
   pagedown::html_resume:
+    css: 
+      - css/custom_resume.css
+      # - css/override.css 
+      - css/styles.css      # OVERIDE CERTAIN FUNCTIONS OF CSS
+      - resume               # DEFAULT FILE
     # set it to true for a self-contained HTML page but it'll take longer to render
     self_contained: false
 # uncomment this line to produce HTML and PDF in RStudio:
 #knit: pagedown::chrome_print
+
+
 ---
+
+```{r, include=FALSE}
+library(knitr)
+
+knitr::opts_chunk$set(
+  results='asis', 
+  echo = FALSE
+)
+library(tidyverse)
+library(glue)
+# ======================================================================
+# These variables determine how the the data is loaded and how the exports are
+# done.
+# Is data stored in google sheets? If no data will be gather from the csvs/
+# folder in project
+using_googlesheets <- FALSE
+# Just the copied URL from the sheet
+
+# Is this sheet available for anyone to read? If you're using a private sheet
+# set this to false and go to gather_data.R and run the data loading manually
+# once to cache authentication
+sheet_is_publicly_readable <- FALSE
+# Is the goal of this knit to build a document that is exported to PDF? If so
+# set this to true to have links turned into footnotes at the end of the
+# document
+PDF_EXPORT <- FALSE
+# A global (gasp) variable that holds all the links that were inserted for
+# placement at the end
+links <- c()
+# ======================================================================
+# Now we source two external scripts. One contains functions for building the
+# text output and the other loads up our data from either googlesheets or csvs
+# Functions for building sections from CSV data
+source('parsing_functions.R') 
+# Load data for CV/Resume
+source('gather_data.R')
+# Now we just need to filter down the position data to include less verbose
+# categories and only the entries we have designated for the resume
+# position_data <- position_data %>% 
+#   filter(in_resume) %>% 
+#   mutate(
+#     # Build some custom sections by collapsing others
+#     section = case_when(
+#       section %in% c('research_positions', 'industry_positions') ~ 'positions', 
+#       section %in% c('data_science_writings', 'by_me_press') ~ 'writings',
+#       TRUE ~ section
+#     )
+#   ) 
+```
 
 Aside
 ================================================================================
 
 
-![Lijia Yu](https://avatars1.githubusercontent.com/u/895125?s=400&v=4){width=80%}
+![Diana Vereskaite](C:/CV/cv pic.jpg)
 
 
 Contact Info {#contact}
@@ -22,26 +78,23 @@ Contact Info {#contact}
 
 - <i class="fa fa-envelope"></i> veresk.diana@gmail.com
 - <i class="fa fa-github"></i> [github.com/vereskaite](https://github.com/vereskaite)
-- <i class="fa fa-phone"></i> +37066512743
+- <i class="fa fa-phone"></i> +370 665 12 743
 - <i class="fas fa-calendar-alt"></i> 1993-10-23
 
 
 Skills {#skills}
 --------------------------------------------------------------------------------
 
-- Experienced in statistical analysis, statistical learning models, and optimization methods.
-
-- Intermediate level: R, MS Office
-
-- Beginner level: Git Bash, SQLite, LaTeX
+ ```{r}
+build_skill_bars(skills)
+```
 
 Languages {#languages}
 --------------------------------------------------------------------------------
-- Lithuanian (mother-tongue)
-- English (fluent)
-- Spanish (learning)
-- Russian (learning)
-
+- Lithuanian (Native)
+- English C1 (Fluent)
+- Spanish B1 (Intermediate)
+- Russian A2 (Basic)
 
 
 Main
@@ -50,12 +103,37 @@ Main
 Diana Vereškaitė {#title}
 --------------------------------------------------------------------------------
 
-### Currently searching for Data Analyst/Data Scientist position
+### Searching for Data Analyst/Data Scientist position
 
-Please note that this is a *real* resume, and I'm really looking for a PhD
-student position at the moment. I made this resume because Yihui asked me
-if I'd like to test the **pagedown** package with my resume. If you are
-interested in my background and skills, please feel free to contact me.
+Currently an Investment Analyst with Master's degree in Econometrics and 5+ years of experience executing data-driven solutions. Proficient in Data Processing, Modelling, Forecasting and Visualizing in order to achieve best solutions for business. Experienced in creating, developing, testing and deploying tools to optimize process.
+
+<!-- To deliver insights -->
+<!-- Knowledge -->
+
+<!-- Conceptualized -->
+<!-- Determined -->
+<!-- Formulated -->
+<!-- Initiated -->
+<!-- Managed -->
+<!-- Spearheaded -->
+
+
+
+<!-- Data Analysis -->
+<!-- Statistics -->
+<!-- Data Visualization -->
+<!-- Quantitative Analysis -->
+<!-- Machine Learning -->
+<!-- Modelling -->
+<!-- Mathematics -->
+<!-- Probability -->
+<!-- Debugging -->
+<!-- Programming -->
+
+
+<!-- PERSONAL -->
+<!-- and converting into business insights -->
+<!-- I admire mathematics, my favorite tool is R and I am eager to meet new challenges and increase my wealth of knowledge. -->
 
 
 Education {data-icon=graduation-cap data-concise=true}
@@ -65,7 +143,7 @@ Education {data-icon=graduation-cap data-concise=true}
 
 Vilnius University
 
-Vilnius
+N/A
 
 2017-2019
 
@@ -74,15 +152,15 @@ Vilnius
 
 Vilnius University
 
-Vilnius
+N/A
 
 2012-2016
 
 ### Vilnius Žirmūnų gymnasium
 
-Vilnius
+N/A
 
-Vilnius
+N/A
 
 2008-2012
 
@@ -91,28 +169,53 @@ Vilnius
 Professional Experience {data-icon=suitcase}
 --------------------------------------------------------------------------------
 
-### Investment Analyst
+### Group Investment Analyst
 
 Intrum
 
-Vilnius
+N/A
 
-2018.10 - now
+2019.09 - now
 
 ::: concise
+- Working with bigger banking investment portfolios
+- Working with different countries across Europe, adjusting analysis to each country specifics
+- Modelling and Forecasting investment data, presenting insights to stakeholders
+- Reviewing and validating local analyst analysis
+- Creating, developing, testing and deploying R Shiny application for investment portfolio analysis
+- Assisting internal team transition from Excel to R
+- Creating tools with R that help automatize process
+:::
 
+### Local Investment Analyst
+
+Intrum
+
+N/A
+
+2018.10 - 2019.09
+
+::: concise
+- Working with baking investments in Baltic States region
+- Analysing and Modelling data to examine the Portfolio
+- Forecasting return of investment using various statistical and mathematical models
+- Delivering overview of the Portfolio to stakeholders
+- Assisting internal team transition from Excel to R
 :::
 
 ### Business Analyst
 
 UAB Transcom Worldwide
 
-Vilnius
+N/A
 
 2016.04 – 2018.04
 
 ::: concise
-- Analysing call center data, drawing inferences from it in order to achieve best solutions for business. - Forecasting call data flow and planning resources
+- Analysing call center data, drawing inferences in order to achieve best solutions for business
+- Developing short and long term forecasting for various call center resources
+- Analyzing trends and making recommendations to the management on resources and additional staffing needs
+- Leading the improvement of emerging Serbian market with data driven decisions
 :::
 
 ### Receptionist
@@ -124,31 +227,36 @@ Mallorca, Spain
 2014.06 - 2014.09
 
 ::: concise
-Taking care of hotel documentation also advising customers, coordinating hotel workers to provide the needed assistance or services.
+- Executive and administrative support
+- Front desk reception
+- Office and supply maintenance
+- Coordination of hotel employees tasks
 :::
 
 ### Duty Manager
 
 UAB Transcom Worldwide
 
-Vilnius
+N/A
 
 2013.12 – 2014.06
 
 ::: concise
-Coordinating logistics coordinators, their daily routines, helping them in various situations, controlling their quality, taking care of more complicated cases.
+- Coordinating logistic coordinators' daily routines, KPIs
+- Resolving complicated customer inquiries
 :::
 
 ### Logistics Coordinator
 
 UAB Transcom Worldwide
 
-Vilnius
+N/A
 
 2012.06 – 2013.12
 
 ::: concise
-Providing customer support to logistic company clients
+- Coordinating and monitoring carrier operations
+- Providing customer support to carrier clients
 :::
 
 
@@ -159,10 +267,11 @@ Internship {data-icon=laptop}
 
 Lithuanian free market institute
 
-Vilnius
+N/A
 
 2016.02 – 2016.04
 
 ::: concise
-Helping collecting data and analysing Lithuania’s healthcare system.
+- Collecting data 
+- Performing qualitative and quantitative analysis of Lithuania’s healthcare system
 :::
